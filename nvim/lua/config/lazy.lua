@@ -22,7 +22,7 @@ vim.g.mapleader = " "
 vim.g.maplocalleader = "\\"
 
 
-local plugins = {}
+local plugins = "plugins"
 local opts = {}
 
 -- Setup lazy.nvim
