@@ -10,7 +10,11 @@ if not vim.loop.fs_stat(lazypath) then
 	})
 end
 vim.opt.rtp:prepend(lazypath)
-vim.cmd([[colorscheme gruvbox]])
+-- vim.cmd([[colorscheme gruvbox]])
+
+require("config.globals")
+require("config.keymaps")
+require("config.options")
 
 local plugins = "plugins"
 local opts = {}
