@@ -1,4 +1,4 @@
-local opt = vim.opt
+opt = vim.opt
 
 -- tab/indent
 opt.tabstop = 2
@@ -9,8 +9,8 @@ opt.smartindent = true
 opt.wrap = false
 
 -- search
-opt.incsearch = true -- include search direct fb
-opt.ignorecase = true -- lower/upper case
+opt.incsearch = true
+opt.ignorecase = true
 opt.smartcase = true
 
 -- visual
