@@ -3,3 +3,6 @@
 
 # venv for installation
 python-env/
+
+# .zshrc temporal -- fix 
+zsh/.zshrc
