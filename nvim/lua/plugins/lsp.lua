@@ -1,39 +1,80 @@
-local keyMapper = require('utils.keyMapper').mapKey
+-- Set Key Mapper
+local keyMapper = require("utils.keyMapper").mapKey
 
 return {
-    {
-        "williamboman/mason.nvim",
-        config = function()
-            require('mason').setup()
-        end
+  -- Set :Mason
+  {
+    "williamboman/mason.nvim",
+    config = function()
+      require("mason").setup()
+    end,
+  },
+
+  -- Set :Mason-LSPConfig
+  {
+    "williamboman/mason-lspconfig.nvim",
+    config = function()
+      require("mason-lspconfig").setup({
+        ensure_installed = {
+          "lua_ls", -- Lua
+          "ts_ls",  -- JavaScript/TypeScript
+          "html",   -- HTML
+          "cssls",  -- CSS
+        },
+      })
+    end,
+  },
+
+  -- Neovim LSPConfig
+  {
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      "folke/neodev.nvim", -- Lua
     },
-    {
-        "williamboman/mason-lspconfig.nvim",
-        config = function()
-            require('mason-lspconfig').setup({
-                ensure_installed = { "lua_ls", "ts_ls", "gopls", "html" }
-            })
-        end
-    },
-    {
-        "neovim/nvim-lspconfig",
-        config = function()
-            local lspconfig = require('lspconfig')
+    config = function()
+      require("neodev").setup()
 
-            lspconfig.lua_ls.setup({})
-            lspconfig.ts_ls.setup({})
-            lspconfig.gopls.setup({})
+      -- Lua
+      local lspconfig = require("lspconfig")
+      lspconfig.lua_ls.setup({
+        settings = {
+          Lua = {
+            runtime = {
+              version = "LuaJIT",
+            },
+            diagnostics = {
+              globals = { "vim" },
+            },
+            workspace = {
+              library = vim.api.nvim_get_runtime_file("", true),
+            },
+            telemetry = {
+              enable = false,
+            },
+          },
+        },
+      })
 
-            vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-                vim.lsp.handlers.hover,
-                { border = 'rounded' }
-            )
+      -- JavaScript/TypeScript
+      lspconfig.ts_ls.setup({})
 
+      -- HTML
+      lspconfig.html.setup({})
 
-            keyMapper('K', vim.lsp.buf.hover)
-            keyMapper('gd', vim.lsp.buf.definition)
-            keyMapper('gr', vim.lsp.buf.references)
-            keyMapper('<leader>ca', vim.lsp.buf.code_action)
-        end
-    }
+      -- CSS
+      lspconfig.cssls.setup({})
+
+      -- Lsp handler
+      vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(
+        vim.lsp.handlers.hover,
+        { border = "rounded" }
+      )
+
+      -- Key Mapper
+      keyMapper("K", vim.lsp.buf.hover)
+      keyMapper("gd", vim.lsp.buf.definition)
+      keyMapper("gr", vim.lsp.buf.references)
+      keyMapper("<leader>ca", vim.lsp.buf.code_action)
+    end,
+  },
 }
