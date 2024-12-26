@@ -58,6 +58,19 @@ return {
       -- JavaScript/TypeScript
       lspconfig.ts_ls.setup({})
 
+      -- Setup Dart Server
+      -- local lspconfig = require('lspconfig')
+      lspconfig.dartls.setup {
+        cmd = { "dart", "language-server" },
+        filetypes = { "dart" },
+        root_dir = lspconfig.util.root_pattern("pubspec.yaml"),
+        settings = {
+          dart = {
+            enableSdkFormatter = true,
+          },
+        },
+      }
+
       -- HTML
       lspconfig.html.setup({})
 
