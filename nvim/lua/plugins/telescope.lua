@@ -7,10 +7,15 @@ return {
     dependencies = { "nvim-lua/plenary.nvim" },
     config = function()
       local builtin = require("telescope.builtin")
+      -- File Search
       mapKey("<leader>ff", builtin.find_files)
+      -- Live Grep (Searching Text)
       mapKey("<leader>fg", builtin.live_grep)
+      -- Search opened buffers
       mapKey("<leader>fb", builtin.buffers)
       mapKey("<leader>fh", builtin.help_tags)
+      -- mapKey:
+      mapKey("<leader>gs", builtin.git_status, { desc = "Git Status" })
     end,
   },
   {

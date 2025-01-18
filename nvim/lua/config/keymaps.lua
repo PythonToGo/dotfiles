@@ -21,3 +21,8 @@ mapKey(">", ">gv", "v")
 
 -- floaterm
 mapKey("<C-;>", ":FloatermToggle<CR>")
+
+-- buffers
+mapKey("<leader>n", ":bn<CR>")
+mapKey("<leader>p", ":bp<CR>")
+mapKey("<leader>x", ":bd<CR>")
