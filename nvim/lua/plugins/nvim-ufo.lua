@@ -1,24 +1,29 @@
+---@diagnostic disable: undefined-global
 return {
   'kevinhwang91/nvim-ufo',
   dependencies = 'kevinhwang91/promise-async',
   config = function()
-    vim.o.foldcolumn = '0' -- '0' is not bad
-    vim.o.foldlevel = 99   -- Using ufo provider need a large value, feel free to decrease the value
+    -- Folding options
+    vim.o.foldcolumn = '0'
+    vim.o.foldlevel = 99
     vim.o.foldlevelstart = 99
     vim.o.foldenable = true
 
+    -- LSP capabilites for folding range
     local capabilities = vim.lsp.protocol.make_client_capabilities()
     capabilities.textDocument.foldingRange = {
       dynamicRegistration = false,
       lineFoldingOnly = true
     }
-    local language_servers = require("lspconfig").util.available_servers() -- or list servers manually like {'gopls', 'clangd'}
-    for _, ls in ipairs(language_servers) do
-      require('lspconfig')[ls].setup({
+    -- Setup LSP servers manually
+    local lspconfig = require("lspconfig")
+    local servers = { 'clangd', 'pyright', 'ts_ls' }
+    for _, server in ipairs(servers) do
+      lspconfig[server].setup({
         capabilities = capabilities
-        -- you can add other fields for setting up lsp server in this table
       })
     end
+
     require('ufo').setup()
   end,
 }
